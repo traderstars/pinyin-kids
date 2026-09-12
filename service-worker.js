@@ -1,4 +1,4 @@
-const CACHE_NAME = "little-mandarin-v5";
+const CACHE_NAME = "little-mandarin-v6";
 const SHELL = [
   "./", "./index.html", "./review.html", "./progress.html", "./styles.css", "./app.js", "./review.js", "./progress.js",
   "./data/curriculum.js", "./manifest.webmanifest", "./assets/landou-mascot-app.png", "./assets/icon-180.png",
@@ -26,6 +26,15 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  const isPageOrCode = event.request.mode === "navigate" || /\.(?:html|js|css|webmanifest)(?:\?|$)/.test(new URL(event.request.url).pathname);
+  if (isPageOrCode) {
+    event.respondWith(fetch(event.request).then((response) => {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+      return response;
+    }).catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html"))));
+    return;
+  }
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
     const copy = response.clone();
     caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
