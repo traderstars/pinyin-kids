@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff8e8" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icon-180.png" />
+  <title>家长语音检查</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app review-app">
+    <header class="review-header">
+      <a class="back-link" href="index.html">← 返回学习工具</a>
+      <h1>家长语音检查</h1>
+      <p>逐条试听拼音和汉字教学音频。孩子学习前，建议优先检查当前课程。</p>
+    </header>
+    <div class="review-tools">
+      <button class="filter-button active" data-filter="all">全部</button>
+      <button class="filter-button" data-filter="pending">待检查</button>
+      <button class="filter-button" data-filter="flagged">需重做</button>
+      <strong id="reviewCount"></strong>
+    </div>
+    <div id="reviewList" class="review-list"></div>
+  </main>
+  <script src="data/curriculum.js"></script>
+  <script src="review.js"></script>
+  <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "小小普通话乐园",
+  "short_name": "普通话乐园",
+  "description": "给孩子的普通话拼音、汉字和粤语识字小课",
+  "lang": "zh-CN",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff8e8",
+  "theme_color": "#fff8e8",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fff8e8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="普通话乐园" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/icon-180.png" />
+    <title>小小普通话乐园</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <button id="homeButton" class="icon-button hidden" aria-label="返回首页">←</button>
+        <div>
+          <p class="eyebrow">每天玩一小会儿</p>
+          <h1 id="pageTitle">小小普通话乐园</h1>
+        </div>
+        <button id="soundButton" class="icon-button" aria-label="打开或关闭声音">🔊</button>
+      </header>
+
+      <section id="homeScreen" class="screen active">
+        <div class="hello-card">
+          <span class="mascot" aria-hidden="true">🐼</span>
+          <div>
+            <h2>你好呀，小朋友！</h2>
+            <p>今天想玩哪一个？</p>
+          </div>
+        </div>
+
+        <div class="today-strip">
+          <div class="today-badge">今日小课</div>
+          <div><strong>约 5 分钟</strong><span>先认识 · 再练习 · 会运用</span></div>
+          <span class="path-dots" aria-label="三个学习阶段">●—●—●</span>
+        </div>
+
+        <div class="game-grid">
+          <button class="game-card pinyin-card" data-track="pinyin">
+            <span class="game-icon" aria-hidden="true">🎈</span>
+            <span class="game-title">拼音乐园</span>
+            <span class="game-copy">63 个拼音内容 · 22 节</span>
+            <span class="game-start">开始玩 →</span>
+          </button>
+          <button class="game-card hanzi-card" data-track="hanzi">
+            <span class="game-icon" aria-hidden="true">🌱</span>
+            <span class="game-title">认字游戏</span>
+            <span class="game-copy">100 个生活常用字 · 34 节</span>
+            <span class="game-start">开始玩 →</span>
+          </button>
+          <button class="game-card cantonese-card" data-track="cantonese">
+            <span class="game-icon" aria-hidden="true">🪭</span>
+            <span class="game-title">粤语识字</span>
+            <span class="game-copy">100 个生活常用字 · 34 节</span>
+            <span class="game-start">开始玩 →</span>
+          </button>
+        </div>
+
+        <div class="grownup-note">
+          <span>💡</span>
+          <p><strong>给家长：</strong>每课学习 2～3 个新内容。陪孩子听一听、说一说，不用催。<br><a href="review.html">检查课程语音 →</a></p>
+        </div>
+      </section>
+
+      <section id="courseScreen" class="screen">
+        <div class="course-summary">
+          <div><span id="courseIcon" class="course-icon">🎈</span></div>
+          <div><p class="eyebrow">循序渐进的小课</p><h2 id="courseTitle">拼音课程</h2><p id="courseProgress">已完成 0 / 22 节</p></div>
+        </div>
+        <div id="lessonList" class="lesson-list"></div>
+      </section>
+
+      <section id="learnScreen" class="screen" aria-live="polite">
+        <div class="lesson-steps">
+          <span class="step active">1 认识</span><span>2 练习</span><span>3 完成</span>
+        </div>
+        <div class="learn-card">
+          <p id="learnCount" class="learn-count">先认识 1 / 3</p>
+          <div id="learnPicture" class="learn-picture">👂</div>
+          <div id="learnMain" class="learn-main">ā</div>
+          <p id="learnExample" class="learn-example">阿姨的“阿”</p>
+          <button id="learnListenButton" class="listen-button">🔊 听一听</button>
+          <p class="say-tip">听完后，也跟着说一遍吧</p>
+          <button id="learnNextButton" class="primary-button">我认识了 →</button>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="screen" aria-live="polite">
+        <div class="lesson-steps">
+          <span>1 认识</span><span class="active">2 练习</span><span>3 完成</span>
+        </div>
+        <div class="progress-row">
+          <span id="roundLabel">第 1 题 / 5</span>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          <span id="stars">☆ ☆ ☆ ☆ ☆</span>
+        </div>
+
+        <div class="question-card">
+          <div id="picture" class="picture" aria-hidden="true">👂</div>
+          <p id="prompt" class="prompt">听一听，哪个是 ā？</p>
+          <button id="listenButton" class="listen-button">🔊 再听一次</button>
+          <div id="answers" class="answers"></div>
+          <p id="feedback" class="feedback" role="status"></p>
+        </div>
+      </section>
+
+      <section id="finishScreen" class="screen">
+        <div class="lesson-steps">
+          <span>1 认识</span><span>2 练习</span><span class="active">3 完成</span>
+        </div>
+        <div class="finish-card">
+          <div class="celebration" aria-hidden="true">🎉</div>
+          <h2>完成啦！</h2>
+          <p id="finishMessage">你得到 5 颗小星星</p>
+          <div id="finishStars" class="finish-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+          <button id="againButton" class="primary-button">再玩一次</button>
+          <button id="finishHomeButton" class="text-button">换一个游戏</button>
+        </div>
+      </section>
+    </main>
+    <script src="data/curriculum.js"></script>
+    <script src="app.js"></script>
+    <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");</script>
+  </body>
+</html>
