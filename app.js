@@ -2,6 +2,7 @@ const tracks = buildTracks(window.CURRICULUM);
 const screens = [...document.querySelectorAll(".screen")];
 const $ = (selector) => document.querySelector(selector);
 const progress = JSON.parse(localStorage.getItem("little-mandarin-progress") || "{}");
+const mastery = JSON.parse(localStorage.getItem("little-mandarin-mastery") || "{}");
 let currentTrack, currentLesson, audioPlayer;
 let currentLearn = 0, currentQuestion = 0, score = 0;
 let activeQuestions = [], retryQueue = [], soundOn = true, locked = false;
@@ -66,7 +67,55 @@ function goHome() {
   stopAudio();
   currentTrack = null;
   $("#pageTitle").textContent = "小小普通话乐园";
+  refreshHome();
   showScreen("homeScreen");
+}
+
+function refreshHome() {
+  const actions = $("#dailyActions");
+  actions.replaceChildren();
+  const dueByTrack = tracks.map((track) => ({ track, items: dueItems(track) })).filter((entry) => entry.items.length);
+  if (dueByTrack.length) {
+    $("#dailyMessage").textContent = `有 ${dueByTrack.reduce((sum, entry) => sum + entry.items.length, 0)} 个内容到复习时间了`;
+    dueByTrack.forEach(({ track, items }) => {
+      const button = document.createElement("button");
+      button.className = "daily-button review";
+      button.textContent = `${track.title}复习 ${Math.min(items.length, 6)}`;
+      button.addEventListener("click", () => startReview(track, items));
+      actions.append(button);
+    });
+    return;
+  }
+  const next = tracks.map((track) => ({ track, lesson: track.lessons.find((lesson) => !progress[lesson.id]) })).find((entry) => entry.lesson);
+  if (!next) {
+    $("#dailyMessage").textContent = "全部课程都完成啦，可以挑喜欢的再玩";
+    return;
+  }
+  $("#dailyMessage").textContent = `建议继续：${next.lesson.title}`;
+  const button = document.createElement("button");
+  button.className = "daily-button";
+  button.textContent = "开始今日小课 →";
+  button.addEventListener("click", () => { currentTrack = next.track; startLesson(next.lesson); });
+  actions.append(button);
+}
+
+function dueItems(track) {
+  const now = Date.now();
+  return track.allItems.filter((item) => mastery[item.audio]?.dueAt && Date.parse(mastery[item.audio].dueAt) <= now);
+}
+
+function startReview(track, items) {
+  currentTrack = track;
+  currentLesson = { id: `review-${track.id}`, title: "今日复习", group: "复习", items: items.slice(0, 6), isReview: true };
+  currentLearn = currentLesson.items.length;
+  currentQuestion = 0;
+  score = 0;
+  retryQueue = [];
+  activeQuestions = currentLesson.items.map((item, index) => makeQuestion(item, index));
+  $("#pageTitle").textContent = `${track.title}复习`;
+  showScreen("gameScreen");
+  renderQuestion();
+  speak(activeQuestions[0].say, activeQuestions[0].audio);
 }
 
 function openTrack(trackId) {
@@ -164,6 +213,10 @@ function checkAnswer(button, choice) {
   if (locked) return;
   const question = activeQuestions[currentQuestion];
   if (choice !== question.answer) {
+    if (!question.missRecorded) {
+      recordAttempt(question, false);
+      question.missRecorded = true;
+    }
     if (!question.isRetry && !retryQueue.includes(currentQuestion)) retryQueue.push(currentQuestion);
     button.classList.add("wrong");
     $("#feedback").textContent = "再听一次，慢慢找～";
@@ -172,11 +225,29 @@ function checkAnswer(button, choice) {
     return;
   }
   locked = true;
+  if (!question.isRetry) recordAttempt(question, true);
   if (!question.isRetry) score += 1;
   button.classList.add("correct");
   $("#feedback").textContent = "答对啦！真棒！";
   speak("答对啦！真棒！", "correct");
   setTimeout(advanceQuestion, 1000);
+}
+
+function recordAttempt(item, correct) {
+  const state = mastery[item.audio] || { correct: 0, misses: 0, streak: 0 };
+  if (correct) {
+    state.correct += 1;
+    state.streak += 1;
+    const intervals = [1, 2, 4, 7, 14, 30];
+    const days = intervals[Math.min(state.streak - 1, intervals.length - 1)];
+    state.dueAt = new Date(Date.now() + days * 86400000).toISOString();
+  } else {
+    state.misses += 1;
+    state.streak = 0;
+    state.dueAt = new Date(Date.now() + 86400000).toISOString();
+  }
+  mastery[item.audio] = state;
+  localStorage.setItem("little-mandarin-mastery", JSON.stringify(mastery));
 }
 
 function advanceQuestion() {
@@ -196,8 +267,10 @@ function advanceQuestion() {
 }
 
 function finishLesson() {
-  progress[currentLesson.id] = { completedAt: new Date().toISOString(), score };
-  localStorage.setItem("little-mandarin-progress", JSON.stringify(progress));
+  if (!currentLesson.isReview) {
+    progress[currentLesson.id] = { completedAt: new Date().toISOString(), score };
+    localStorage.setItem("little-mandarin-progress", JSON.stringify(progress));
+  }
   showScreen("finishScreen");
   $("#finishMessage").textContent = `你认识了 ${currentLesson.items.length} 个新朋友`;
   $("#finishStars").textContent = Array(currentLesson.items.length).fill("⭐").join(" ");
@@ -217,3 +290,4 @@ $("#soundButton").addEventListener("click", () => {
   if (!soundOn) stopAudio(); else speak("声音打开啦", "sound_on");
 });
 window.speechSynthesis?.getVoices();
+refreshHome();

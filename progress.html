@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff8e8" />
+  <title>家长学习进度</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app review-app">
+    <header class="review-header">
+      <a class="back-link" href="index.html">← 返回学习工具</a>
+      <h1>家长学习进度</h1>
+      <p>数据只保存在当前设备的浏览器中，不会上传。</p>
+    </header>
+    <div id="statsGrid" class="stats-grid"></div>
+    <div id="trackProgress"></div>
+  </main>
+  <script src="data/curriculum.js"></script>
+  <script src="progress.js"></script>
+  <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");</script>
+</body>
+</html>

@@ -83,6 +83,12 @@ p { margin: 0; line-height: 1.55; }
 .today-strip span { color: #88776a; font-size: 14px; }
 .today-badge { padding: 7px 12px; border-radius: 99px; background: #ffdf79; font-weight: 800; }
 .today-strip .path-dots { color: #69b98d; font-size: 18px; letter-spacing: 2px; }
+.daily-card { display: flex; align-items: center; gap: 20px; padding: 22px 24px; margin-bottom: 22px; border: 3px solid #40372f; border-radius: 24px; background: white; box-shadow: 0 6px 0 #40372f; }
+.daily-card > div:first-child { flex: 1; }
+.daily-card h2 { margin-bottom: 2px; }
+.daily-actions { display: flex; gap: 9px; flex-wrap: wrap; justify-content: flex-end; }
+.daily-button { padding: 12px 17px; border: 2px solid #40372f; border-radius: 99px; background: #ffd66e; box-shadow: 0 3px 0 #40372f; font-weight: 800; cursor: pointer; }
+.daily-button.review { background: #f5b9cc; }
 .game-card {
   display: flex;
   min-height: 270px;
@@ -216,6 +222,13 @@ p { margin: 0; line-height: 1.55; }
 .review-copy span { color: #796d64; }
 .review-row button { padding: 9px 12px; border: 1px solid #40372f; border-radius: 10px; background: white; cursor: pointer; }
 .pass-review { color: #26734a; }.flag-review { color: #b94b39; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 22px 0; }
+.stat-card { padding: 22px; border: 2px solid #40372f; border-radius: 20px; background: white; }
+.stat-number { display: block; font-size: 38px; font-weight: 800; color: #ef765b; }
+.track-progress { margin: 14px 0; padding: 18px; border: 2px solid #40372f; border-radius: 18px; background: white; }
+.track-progress-row { display: flex; justify-content: space-between; margin-bottom: 9px; font-weight: 800; }
+.mastery-bar { height: 14px; overflow: hidden; border: 2px solid #40372f; border-radius: 99px; background: #eee7dc; }
+.mastery-fill { height: 100%; background: #69b98d; }
 
 @keyframes appear { from { opacity: 0; transform: translateY(8px); } }
 @keyframes shake { 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
@@ -230,6 +243,9 @@ p { margin: 0; line-height: 1.55; }
   .progress-row { flex-wrap: wrap; }
   .progress-track { order: 3; flex-basis: 100%; }
   .today-strip .path-dots { display: none; }
+  .daily-card { align-items: stretch; flex-direction: column; }
+  .daily-actions { justify-content: flex-start; }
+  .stats-grid { grid-template-columns: 1fr; }
   .review-row { grid-template-columns: 48px 1fr; }
   .review-row button { grid-row: 2; }
   .review-row .play-review { grid-column: 1; }
