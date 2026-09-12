@@ -25,9 +25,9 @@
 
       <section id="homeScreen" class="screen active">
         <div class="hello-card">
-          <span class="mascot" aria-hidden="true">🐼</span>
+          <button id="mascotHello" class="mascot-button" aria-label="听蓝豆打招呼"><img src="assets/landou-mascot-app.png" alt="蓝色小狗蓝豆挥手" /></button>
           <div>
-            <h2>你好呀，小朋友！</h2>
+            <h2>蓝豆：你好呀！</h2>
             <p>今天想玩哪一个？</p>
           </div>
         </div>
@@ -87,6 +87,7 @@
           <span class="step active">1 认识</span><span>2 练习</span><span>3 完成</span>
         </div>
         <div class="learn-card">
+          <div class="coach-line"><img src="assets/landou-mascot-app.png" alt="" /><span>蓝豆带你认识新朋友</span></div>
           <p id="learnCount" class="learn-count">先认识 1 / 3</p>
           <div id="learnPicture" class="learn-picture">👂</div>
           <div id="learnMain" class="learn-main">ā</div>
@@ -108,6 +109,7 @@
         </div>
 
         <div class="question-card">
+          <img id="coachMini" class="coach-mini" src="assets/landou-mascot-app.png" alt="蓝豆陪你答题" />
           <div id="picture" class="picture" aria-hidden="true">👂</div>
           <p id="prompt" class="prompt">听一听，哪个是 ā？</p>
           <button id="listenButton" class="listen-button">🔊 再听一次</button>
@@ -121,7 +123,7 @@
           <span>1 认识</span><span>2 练习</span><span class="active">3 完成</span>
         </div>
         <div class="finish-card">
-          <div class="celebration" aria-hidden="true">🎉</div>
+          <img class="finish-mascot" src="assets/landou-mascot-app.png" alt="蓝豆和你一起庆祝" />
           <h2>完成啦！</h2>
           <p id="finishMessage">你得到 5 颗小星星</p>
           <div id="finishStars" class="finish-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>

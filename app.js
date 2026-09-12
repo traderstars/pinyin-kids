@@ -199,6 +199,7 @@ function renderQuestion() {
   $("#picture").textContent = currentTrack.id === "pinyin" ? "👂" : question.picture;
   $("#prompt").textContent = currentTrack.id === "pinyin" ? "听一听，选出正确的拼音" : `${question.word}，请选择正确的字`;
   $("#feedback").textContent = "";
+  $("#coachMini").classList.remove("celebrate");
   $("#answers").replaceChildren();
   question.choices.forEach((choice) => {
     const button = document.createElement("button");
@@ -228,6 +229,7 @@ function checkAnswer(button, choice) {
   if (!question.isRetry) recordAttempt(question, true);
   if (!question.isRetry) score += 1;
   button.classList.add("correct");
+  $("#coachMini").classList.add("celebrate");
   $("#feedback").textContent = "答对啦！真棒！";
   speak("答对啦！真棒！", "correct");
   setTimeout(advanceQuestion, 1000);
@@ -289,5 +291,6 @@ $("#soundButton").addEventListener("click", () => {
   $("#soundButton").textContent = soundOn ? "🔊" : "🔇";
   if (!soundOn) stopAudio(); else speak("声音打开啦", "sound_on");
 });
+$("#mascotHello").addEventListener("click", () => speak("你好呀，我是蓝豆！我们一起玩，一起认识新朋友吧！", "mascot_hello"));
 window.speechSynthesis?.getVoices();
 refreshHome();

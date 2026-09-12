@@ -38,6 +38,7 @@ PROMPTS = {
     "practice_again": "再练一次，就记牢啦。",
     "finished": "完成啦！你得到五颗小星星。",
     "sound_on": "声音打开啦。",
+    "mascot_hello": "你好呀，我是蓝豆！我们一起玩，一起认识新朋友吧！",
 }
 
 

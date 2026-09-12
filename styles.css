@@ -66,7 +66,9 @@ p { margin: 0; line-height: 1.55; }
   background: white;
   box-shadow: 0 8px 0 #40372f;
 }
-.mascot { font-size: 64px; }
+.mascot-button { width: 104px; height: 104px; padding: 0; overflow: hidden; flex: 0 0 auto; border: 0; border-radius: 50%; background: #dff3ff; cursor: pointer; }
+.mascot-button img { width: 100%; height: 100%; object-fit: contain; object-position: center 12%; transform: scale(1.25); }
+.mascot-button:active { transform: scale(.94); }
 
 .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .today-strip {
@@ -154,6 +156,8 @@ p { margin: 0; line-height: 1.55; }
   text-align: center;
 }
 .learn-count { color: #897a6e; font-weight: 700; }
+.coach-line { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 7px; border-radius: 99px; background: #eaf7ff; color: #426b84; font-weight: 800; }
+.coach-line img { width: 42px; height: 42px; object-fit: contain; }
 .learn-picture { margin-top: 22px; font-size: 82px; }
 .learn-main { margin: 8px 0; color: #ef765b; font-size: clamp(68px, 16vw, 110px); font-weight: 800; line-height: 1.1; }
 .learn-example { margin-bottom: 22px; font-size: 24px; font-weight: 700; }
@@ -163,6 +167,7 @@ p { margin: 0; line-height: 1.55; }
 #stars { color: #ef9c22; white-space: nowrap; }
 
 .question-card {
+  position: relative;
   min-height: 540px;
   padding: 34px clamp(18px, 5vw, 48px);
   border: 3px solid #40372f;
@@ -171,6 +176,8 @@ p { margin: 0; line-height: 1.55; }
   box-shadow: 0 9px 0 #40372f;
   text-align: center;
 }
+.coach-mini { position: absolute; top: 18px; right: 22px; width: 70px; height: 76px; object-fit: contain; transition: transform .2s ease; }
+.coach-mini.celebrate { animation: mascot-bounce .55s ease; }
 .picture { min-height: 110px; font-size: 88px; line-height: 1.2; }
 .prompt { margin: 12px 0 16px; font-size: clamp(25px, 5vw, 36px); font-weight: 800; }
 .listen-button, .primary-button {
@@ -200,7 +207,7 @@ p { margin: 0; line-height: 1.55; }
 .feedback { min-height: 36px; margin-top: 24px; font-size: 22px; font-weight: 700; color: #e56c52; }
 
 .finish-card { padding: 56px 24px; border: 3px solid #40372f; border-radius: 32px; background: white; box-shadow: 0 9px 0 #40372f; text-align: center; }
-.celebration { font-size: 90px; }
+.finish-mascot { width: min(250px, 60vw); height: 230px; object-fit: contain; animation: mascot-bounce .8s ease; }
 .finish-card h2 { font-size: 40px; color: #f0785c; }
 .finish-stars { margin: 22px 0; font-size: clamp(28px, 7vw, 50px); }
 .primary-button { display: block; min-width: 210px; margin: 0 auto 16px; background: #ffd66e; font-size: 21px; }
@@ -232,6 +239,7 @@ p { margin: 0; line-height: 1.55; }
 
 @keyframes appear { from { opacity: 0; transform: translateY(8px); } }
 @keyframes shake { 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
+@keyframes mascot-bounce { 0%, 100% { transform: translateY(0) rotate(0); } 35% { transform: translateY(-16px) rotate(-5deg); } 70% { transform: translateY(-5px) rotate(5deg); } }
 
 @media (max-width: 620px) {
   .app { padding-top: 18px; }
@@ -251,4 +259,6 @@ p { margin: 0; line-height: 1.55; }
   .review-row .play-review { grid-column: 1; }
   .review-row .pass-review, .review-row .flag-review { grid-column: auto; }
   .review-tools strong { flex-basis: 100%; }
+  .mascot-button { width: 82px; height: 82px; }
+  .coach-mini { width: 52px; height: 58px; right: 12px; }
 }

@@ -1,9 +1,9 @@
-const CACHE_NAME = "little-mandarin-v4";
+const CACHE_NAME = "little-mandarin-v5";
 const SHELL = [
   "./", "./index.html", "./review.html", "./progress.html", "./styles.css", "./app.js", "./review.js", "./progress.js",
-  "./data/curriculum.js", "./manifest.webmanifest", "./assets/icon-180.png",
+  "./data/curriculum.js", "./manifest.webmanifest", "./assets/landou-mascot-app.png", "./assets/icon-180.png",
   "./assets/icon-192.png", "./assets/icon-512.png", "./audio/correct.mp3",
-  "./audio/finished.mp3", "./audio/sound_on.mp3"
+  "./audio/finished.mp3", "./audio/sound_on.mp3", "./audio/mascot_hello.mp3"
 ];
 const COURSE_AUDIO = [
   ...Array.from({ length: 63 }, (_, index) => `./audio/pinyin_${index}.mp3`),
